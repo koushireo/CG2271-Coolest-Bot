@@ -4,9 +4,9 @@
 #include "cmsis_os2.h"
 #include "string.h"
 
-extern osSemaphoreId_t mySem, mySem2, mySem3, mySem4;
+extern osSemaphoreId_t musicSem, musicSem2, musicSem3, musicSem4;
 extern osEventFlagsId_t idleMusicFlag;
-extern int MusicRepeat1, MusicRepeat2;
+extern int MusicRepeat1;
 
 void initBuzzer(void);
 void cruelAngelThesis1Thread(void* argument);

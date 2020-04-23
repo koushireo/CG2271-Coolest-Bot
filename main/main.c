@@ -15,7 +15,7 @@
 //Define thread to handle UART2 interrupts
 void motor(int UARTdata);
 
-void UART2_thread(void *argument) {
+void decoder_thread(void *argument) {
     int UARTdata;
     for (;;) {
         osMessageQueueGet(UARTMsgQ, &UARTdata, NULL, osWaitForever);  //wait for message from UART IRQ
@@ -27,44 +27,14 @@ void UART2_thread(void *argument) {
             osEventFlagsSet(greenEventFlag, 0x1);                     //enable green led blinking
             motor(UARTdata);                                          //decode motor data
         } else if ((UARTdata & 0b11) == 0b00) {
-            osSemaphoreRelease(mySem);                                //play music to indicate communication established
+            osSemaphoreRelease(musicSem);                                //play music to indicate communication established
             osSemaphoreRelease(myConnectSem);
         } else if ((UARTdata & 0b11) == 0b01) {
             osEventFlagsClear(idleMusicFlag, 0x1);                      //disable idle music
-            osSemaphoreRelease(mySem4);    //play ending music
+            osSemaphoreRelease(musicSem4);    //play ending music
         }
     }
 }
-
-void motor(int UARTdata) {
-    if (UARTdata & MASK(2)) {
-        if (UARTdata & MASK(4)) {
-            pwm_forward_left();
-        } else if (UARTdata & MASK(5)) {
-            pwm_forward_right();
-        } else {				
-            pwm_forward();
-        }
-    } else if (UARTdata & MASK(3)) {
-        if (UARTdata & MASK(4)) {
-            pwm_backward_left();
-        } else if (UARTdata & MASK(5)) {
-            pwm_backward_right();
-        } else {				
-            pwm_backward();
-        }
-    } else if (UARTdata & MASK(4)) {
-        pwm_left();
-    } else if (UARTdata & MASK(5)) {
-        pwm_right();
-    } else {
-        pwm_stop();
-        osEventFlagsClear(greenEventFlag, 0x11);
-        osEventFlagsSet(greenEventFlag, 0x10);
-        redDelay = 250;
-    }
-}
-
 
 int main (void) { 
     // System Initialization
@@ -74,7 +44,7 @@ int main (void) {
     initUART2(BAUD_RATE);
     initBuzzer();
     initLED();
-    osThreadNew(UART2_thread, NULL, NULL);
+    osThreadNew(decoder_thread, NULL, NULL);
     osThreadNew(cruelAngelThesis1Thread, NULL, NULL);
     osThreadNew(cruelAngelThesis2Thread, NULL, NULL);
     osThreadNew(cruelAngelThesis3Thread, NULL, NULL);

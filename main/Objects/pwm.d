@@ -9,3 +9,7 @@
 .\objects\pwm.o: C:\Users\fch\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\RTOS2\Include\cmsis_os2.h
 .\objects\pwm.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\pwm.o: freqToMod.h
+.\objects\pwm.o: ledControl.h
+.\objects\pwm.o: C:\Users\fch\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.0\Device\Include\MKL25Z4.h
+.\objects\pwm.o: .\RTE\_Target_1\RTE_Components.h
+.\objects\pwm.o: C:\Users\fch\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.0\Device\Include\MKL25Z4.h
