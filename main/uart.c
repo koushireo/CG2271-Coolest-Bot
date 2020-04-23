@@ -38,7 +38,6 @@ void initUART2(uint32_t baud_rate) {
     NVIC_ClearPendingIRQ(UART2_IRQn);
     NVIC_EnableIRQ(UART2_IRQn);	
 		
-    //initialize semaphore for UART
     UARTMsgQ = osMessageQueueNew(1, 1, NULL);
 }
 

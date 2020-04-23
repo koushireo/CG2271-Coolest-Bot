@@ -15,6 +15,7 @@
 #define MOD_VAL 256
 
 osSemaphoreId_t PWMsem;
+osMessageQueueId_t tMotorMsgQ;
 
 void initPWM(void) {
     SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
@@ -53,6 +54,7 @@ void initPWM(void) {
     TPM2->MOD = MOD_VAL;
 		
     osSemaphoreId_t PWMsem = osSemaphoreNew(1,0,NULL);
+    tMotorMsgQ = osMessageQueueNew(1, 1, NULL);
 }
 
 void pwm_stop(void) {
@@ -111,31 +113,35 @@ void pwm_backward_left(void) {
 	PTA->PCOR |= (MASK(2) | MASK(5));
 }
 
-void tMotorControl(int UARTdata) {
-    if (UARTdata & MASK(2)) {
-        if (UARTdata & MASK(4)) {
-            pwm_forward_left();
+void tMotorControl(void* argument) {
+    int UARTdata;
+    for(;;){
+        osMessageQueueGet(tMotorMsgQ, &UARTdata, NULL, osWaitForever);
+        if (UARTdata & MASK(2)) {
+            if (UARTdata & MASK(4)) {
+                pwm_forward_left();
+            } else if (UARTdata & MASK(5)) {
+                pwm_forward_right();
+            } else {				
+                pwm_forward();
+            }
+        } else if (UARTdata & MASK(3)) {
+            if (UARTdata & MASK(4)) {
+                pwm_backward_left();
+            } else if (UARTdata & MASK(5)) {
+                pwm_backward_right();
+            } else {				
+                pwm_backward();
+            }
+        } else if (UARTdata & MASK(4)) {
+            pwm_left();
         } else if (UARTdata & MASK(5)) {
-            pwm_forward_right();
-        } else {				
-            pwm_forward();
+            pwm_right();
+        } else {
+            pwm_stop();
+            osEventFlagsClear(greenEventFlag, 0x11);
+                osEventFlagsSet(greenEventFlag, 0x10);
+                redDelay = 250;
         }
-    } else if (UARTdata & MASK(3)) {
-        if (UARTdata & MASK(4)) {
-            pwm_backward_left();
-        } else if (UARTdata & MASK(5)) {
-            pwm_backward_right();
-        } else {				
-            pwm_backward();
-        }
-    } else if (UARTdata & MASK(4)) {
-        pwm_left();
-    } else if (UARTdata & MASK(5)) {
-        pwm_right();
-    } else {
-        pwm_stop();
-        osEventFlagsClear(greenEventFlag, 0x11);
-        osEventFlagsSet(greenEventFlag, 0x10);
-        redDelay = 250;
     }
 }

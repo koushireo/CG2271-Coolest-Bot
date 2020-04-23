@@ -24,7 +24,7 @@ void tBrain(void *argument) {
             redDelay = 500;                                           //if tMotorControl moves, set red blinking speed to 500
             osEventFlagsClear(greenEventFlag, 0x11);
             osEventFlagsSet(greenEventFlag, 0x1);                     //enable green led blinking
-            tMotorControl(UARTdata);                                          //decode tMotorControl data
+            osMessageQueuePut(tMotorMsgQ, &UARTdata, NULL, 0);        //decode tMotorControl data
         } else if ((UARTdata & 0b11) == 0b00) {
             osSemaphoreRelease(musicSem);                             //play music to indicate communication established
             osSemaphoreRelease(myConnectSem);
@@ -44,6 +44,7 @@ int main (void) {
     initBuzzer();
     initLED();
     osThreadNew(tBrain, NULL, NULL);
+    osThreadNew(tMotorControl, NULL, NULL);
     osThreadNew(tAudio1, NULL, NULL);
     osThreadNew(tAudio2, NULL, NULL);
     osThreadNew(tAudio3, NULL, NULL);
