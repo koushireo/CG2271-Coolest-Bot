@@ -111,7 +111,7 @@ void pwm_backward_left(void) {
 	PTA->PCOR |= (MASK(2) | MASK(5));
 }
 
-void motor(int UARTdata) {
+void tMotorControl(int UARTdata) {
     if (UARTdata & MASK(2)) {
         if (UARTdata & MASK(4)) {
             pwm_forward_left();

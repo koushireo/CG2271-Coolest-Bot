@@ -71,7 +71,7 @@ void initBuzzer(void) {
     osEventFlagsSet(idleMusicFlag, 0x1);
 }
 
-void cruelAngelThesis1Thread() {
+void tAudio1() {
     int note[] =     {C7,  DS7, F7,  DS7, F7,  AS7, GS7, G7,  F7,  G7,  AS7, C8,  F7,  DS7, AS7, AS7, G7,  AS7, AS7, C8};
     int duration[] = {500, 500, 375, 375, 750, 250, 250, 125, 250, 1125, 500, 400, 300, 375, 250, 250, 250, 250, 375, 1625};
     int total = sizeof(note)/sizeof(int);
@@ -93,7 +93,7 @@ void cruelAngelThesis1Thread() {
 }
 
 //Bar 10
-void cruelAngelThesis2Thread(void* argument) {
+void tAudio2(void* argument) {
     for (;;) {
         osEventFlagsWait(idleMusicFlag, 0x1, osFlagsNoClear, osWaitForever);
         osSemaphoreAcquire(musicSem2, osWaitForever);
@@ -117,7 +117,7 @@ void cruelAngelThesis2Thread(void* argument) {
 
 
 //Bar 14
-void cruelAngelThesis3Thread(void* argument) {
+void tAudio3(void* argument) {
     for (;;) {
         osSemaphoreAcquire(musicSem3, osWaitForever);
         int note1, note2, timer1, timer2;
@@ -159,7 +159,7 @@ void cruelAngelThesis3Thread(void* argument) {
 
 
 //Bar 26
-void cruelAngelThesis4Thread() {
+void tAudio4() {
     int note[] =     {DS7, D7,  DS7, D7,  F7,  DS7, D7,  C7,  D7, DS7,  D7,   F7,  D7,  C7,    AS6,    G7,    GS7,   AS7};
     int duration[] = {750, 250, 750, 250, 750, 250, 375, 375, 250, 750, 250, 375, 375,  250,    500,   500,   500,   500};
     int counter = 0;
@@ -180,7 +180,7 @@ void cruelAngelThesis4Thread() {
 }
 
 //Bar 30
-void cruelAngelThesis5Thread() {
+void tAudio5() {
     int note[] =     {DS7, D7,  DS7, D7,  F7,  DS7, D7,  DS7,  F7, G7,  GS7, G7,  F7,  DS7, F7, G7};
     int duration[] = {750, 250, 750, 250, 750, 250, 375, 375, 250, 375, 375, 250, 375,  375, 250, 1875};
     int counter = 0;

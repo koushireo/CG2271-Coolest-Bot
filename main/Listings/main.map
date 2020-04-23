@@ -4,14 +4,6 @@ Component: ARM Compiler 5.06 update 6 (build 750) Tool: armlink [4d35ed]
 
 Section Cross References
 
-    main.o(i.decoder_thread) refers to rtx_msgqueue.o(.text.osMessageQueueGet) for osMessageQueueGet
-    main.o(i.decoder_thread) refers to rtx_evflags.o(.text.osEventFlagsSet) for osEventFlagsSet
-    main.o(i.decoder_thread) refers to rtx_evflags.o(.text.osEventFlagsClear) for osEventFlagsClear
-    main.o(i.decoder_thread) refers to pwm.o(i.motor) for motor
-    main.o(i.decoder_thread) refers to rtx_semaphore.o(.text.osSemaphoreRelease) for osSemaphoreRelease
-    main.o(i.decoder_thread) refers to uart.o(.data) for UARTMsgQ
-    main.o(i.decoder_thread) refers to ledcontrol.o(.data) for redDelay
-    main.o(i.decoder_thread) refers to buzzer.o(.data) for musicSem
     main.o(i.main) refers to system_mkl25z4.o(i.SystemCoreClockUpdate) for SystemCoreClockUpdate
     main.o(i.main) refers to rtx_kernel.o(.text.osKernelInitialize) for osKernelInitialize
     main.o(i.main) refers to pwm.o(i.initPWM) for initPWM
@@ -20,16 +12,24 @@ Section Cross References
     main.o(i.main) refers to ledcontrol.o(i.initLED) for initLED
     main.o(i.main) refers to rtx_thread.o(.text.osThreadNew) for osThreadNew
     main.o(i.main) refers to rtx_kernel.o(.text.osKernelStart) for osKernelStart
-    main.o(i.main) refers to main.o(i.decoder_thread) for decoder_thread
-    main.o(i.main) refers to buzzer.o(i.cruelAngelThesis1Thread) for cruelAngelThesis1Thread
-    main.o(i.main) refers to buzzer.o(i.cruelAngelThesis2Thread) for cruelAngelThesis2Thread
-    main.o(i.main) refers to buzzer.o(i.cruelAngelThesis3Thread) for cruelAngelThesis3Thread
-    main.o(i.main) refers to buzzer.o(i.cruelAngelThesis4Thread) for cruelAngelThesis4Thread
-    main.o(i.main) refers to buzzer.o(i.cruelAngelThesis5Thread) for cruelAngelThesis5Thread
-    main.o(i.main) refers to ledcontrol.o(i.led_red_thread) for led_red_thread
-    main.o(i.main) refers to ledcontrol.o(i.led_green_running_thread) for led_green_running_thread
-    main.o(i.main) refers to ledcontrol.o(i.led_green_connect_thread) for led_green_connect_thread
-    main.o(i.main) refers to ledcontrol.o(i.led_green_stop_thread) for led_green_stop_thread
+    main.o(i.main) refers to main.o(i.tBrain) for tBrain
+    main.o(i.main) refers to buzzer.o(i.tAudio1) for tAudio1
+    main.o(i.main) refers to buzzer.o(i.tAudio2) for tAudio2
+    main.o(i.main) refers to buzzer.o(i.tAudio3) for tAudio3
+    main.o(i.main) refers to buzzer.o(i.tAudio4) for tAudio4
+    main.o(i.main) refers to buzzer.o(i.tAudio5) for tAudio5
+    main.o(i.main) refers to ledcontrol.o(i.tLedRed) for tLedRed
+    main.o(i.main) refers to ledcontrol.o(i.tLedGreenRunning) for tLedGreenRunning
+    main.o(i.main) refers to ledcontrol.o(i.tLedGreenConnect) for tLedGreenConnect
+    main.o(i.main) refers to ledcontrol.o(i.tLedGreenStop) for tLedGreenStop
+    main.o(i.tBrain) refers to rtx_msgqueue.o(.text.osMessageQueueGet) for osMessageQueueGet
+    main.o(i.tBrain) refers to rtx_evflags.o(.text.osEventFlagsSet) for osEventFlagsSet
+    main.o(i.tBrain) refers to rtx_evflags.o(.text.osEventFlagsClear) for osEventFlagsClear
+    main.o(i.tBrain) refers to pwm.o(i.tMotorControl) for tMotorControl
+    main.o(i.tBrain) refers to rtx_semaphore.o(.text.osSemaphoreRelease) for osSemaphoreRelease
+    main.o(i.tBrain) refers to uart.o(.data) for UARTMsgQ
+    main.o(i.tBrain) refers to ledcontrol.o(.data) for redDelay
+    main.o(i.tBrain) refers to buzzer.o(.data) for musicSem
     uart.o(i.UART2_IRQHandler) refers to uart.o(i.__NVIC_ClearPendingIRQ) for __NVIC_ClearPendingIRQ
     uart.o(i.UART2_IRQHandler) refers to rtx_msgqueue.o(.text.osMessageQueuePut) for osMessageQueuePut
     uart.o(i.UART2_IRQHandler) refers to uart.o(.data) for UARTMsgQ
@@ -39,91 +39,91 @@ Section Cross References
     uart.o(i.initUART2) refers to rtx_msgqueue.o(.text.osMessageQueueNew) for osMessageQueueNew
     uart.o(i.initUART2) refers to uart.o(.data) for UARTMsgQ
     pwm.o(i.initPWM) refers to rtx_semaphore.o(.text.osSemaphoreNew) for osSemaphoreNew
-    pwm.o(i.motor) refers to pwm.o(i.pwm_forward_left) for pwm_forward_left
-    pwm.o(i.motor) refers to pwm.o(i.pwm_forward_right) for pwm_forward_right
-    pwm.o(i.motor) refers to pwm.o(i.pwm_forward) for pwm_forward
-    pwm.o(i.motor) refers to pwm.o(i.pwm_backward_left) for pwm_backward_left
-    pwm.o(i.motor) refers to pwm.o(i.pwm_backward_right) for pwm_backward_right
-    pwm.o(i.motor) refers to pwm.o(i.pwm_backward) for pwm_backward
-    pwm.o(i.motor) refers to pwm.o(i.pwm_left) for pwm_left
-    pwm.o(i.motor) refers to pwm.o(i.pwm_right) for pwm_right
-    pwm.o(i.motor) refers to pwm.o(i.pwm_stop) for pwm_stop
-    pwm.o(i.motor) refers to rtx_evflags.o(.text.osEventFlagsClear) for osEventFlagsClear
-    pwm.o(i.motor) refers to rtx_evflags.o(.text.osEventFlagsSet) for osEventFlagsSet
-    pwm.o(i.motor) refers to ledcontrol.o(.data) for greenEventFlag
+    pwm.o(i.tMotorControl) refers to pwm.o(i.pwm_forward_left) for pwm_forward_left
+    pwm.o(i.tMotorControl) refers to pwm.o(i.pwm_forward_right) for pwm_forward_right
+    pwm.o(i.tMotorControl) refers to pwm.o(i.pwm_forward) for pwm_forward
+    pwm.o(i.tMotorControl) refers to pwm.o(i.pwm_backward_left) for pwm_backward_left
+    pwm.o(i.tMotorControl) refers to pwm.o(i.pwm_backward_right) for pwm_backward_right
+    pwm.o(i.tMotorControl) refers to pwm.o(i.pwm_backward) for pwm_backward
+    pwm.o(i.tMotorControl) refers to pwm.o(i.pwm_left) for pwm_left
+    pwm.o(i.tMotorControl) refers to pwm.o(i.pwm_right) for pwm_right
+    pwm.o(i.tMotorControl) refers to pwm.o(i.pwm_stop) for pwm_stop
+    pwm.o(i.tMotorControl) refers to rtx_evflags.o(.text.osEventFlagsClear) for osEventFlagsClear
+    pwm.o(i.tMotorControl) refers to rtx_evflags.o(.text.osEventFlagsSet) for osEventFlagsSet
+    pwm.o(i.tMotorControl) refers to ledcontrol.o(.data) for greenEventFlag
     freqtomod.o(i.freqToMod) refers to fflti.o(.text) for __aeabi_i2f
     freqtomod.o(i.freqToMod) refers to fmul.o(x$fpl$fmul) for __aeabi_fmul
     freqtomod.o(i.freqToMod) refers to fdiv.o(.text) for __aeabi_fdiv
     freqtomod.o(i.freqToMod) refers to ffixi.o(.text) for __aeabi_f2iz
-    buzzer.o(i.cruelAngelThesis1Thread) refers to rt_memcpy.o(.emb_text) for __aeabi_memcpy4
-    buzzer.o(i.cruelAngelThesis1Thread) refers to rtx_semaphore.o(.text.osSemaphoreAcquire) for osSemaphoreAcquire
-    buzzer.o(i.cruelAngelThesis1Thread) refers to freqtomod.o(i.freqToMod) for freqToMod
-    buzzer.o(i.cruelAngelThesis1Thread) refers to dflti.o(.text) for __aeabi_ui2d
-    buzzer.o(i.cruelAngelThesis1Thread) refers to dmul.o(.text) for __aeabi_dmul
-    buzzer.o(i.cruelAngelThesis1Thread) refers to dfixi.o(.text) for __aeabi_d2iz
-    buzzer.o(i.cruelAngelThesis1Thread) refers to rtx_delay.o(.text.osDelay) for osDelay
-    buzzer.o(i.cruelAngelThesis1Thread) refers to rtx_semaphore.o(.text.osSemaphoreRelease) for osSemaphoreRelease
-    buzzer.o(i.cruelAngelThesis1Thread) refers to buzzer.o(.constdata) for .constdata
-    buzzer.o(i.cruelAngelThesis1Thread) refers to buzzer.o(.data) for musicSem
-    buzzer.o(i.cruelAngelThesis2Thread) refers to rtx_evflags.o(.text.osEventFlagsWait) for osEventFlagsWait
-    buzzer.o(i.cruelAngelThesis2Thread) refers to rtx_semaphore.o(.text.osSemaphoreAcquire) for osSemaphoreAcquire
-    buzzer.o(i.cruelAngelThesis2Thread) refers to rt_memcpy.o(.emb_text) for __aeabi_memcpy4
-    buzzer.o(i.cruelAngelThesis2Thread) refers to freqtomod.o(i.freqToMod) for freqToMod
-    buzzer.o(i.cruelAngelThesis2Thread) refers to dflti.o(.text) for __aeabi_ui2d
-    buzzer.o(i.cruelAngelThesis2Thread) refers to dmul.o(.text) for __aeabi_dmul
-    buzzer.o(i.cruelAngelThesis2Thread) refers to dfixi.o(.text) for __aeabi_d2iz
-    buzzer.o(i.cruelAngelThesis2Thread) refers to rtx_delay.o(.text.osDelay) for osDelay
-    buzzer.o(i.cruelAngelThesis2Thread) refers to rtx_semaphore.o(.text.osSemaphoreRelease) for osSemaphoreRelease
-    buzzer.o(i.cruelAngelThesis2Thread) refers to buzzer.o(.data) for idleMusicFlag
-    buzzer.o(i.cruelAngelThesis2Thread) refers to buzzer.o(.constdata) for .constdata
-    buzzer.o(i.cruelAngelThesis3Thread) refers to rtx_semaphore.o(.text.osSemaphoreAcquire) for osSemaphoreAcquire
-    buzzer.o(i.cruelAngelThesis3Thread) refers to rt_memcpy.o(.emb_text) for __aeabi_memcpy4
-    buzzer.o(i.cruelAngelThesis3Thread) refers to rtx_evflags.o(.text.osEventFlagsWait) for osEventFlagsWait
-    buzzer.o(i.cruelAngelThesis3Thread) refers to freqtomod.o(i.freqToMod) for freqToMod
-    buzzer.o(i.cruelAngelThesis3Thread) refers to dflti.o(.text) for __aeabi_ui2d
-    buzzer.o(i.cruelAngelThesis3Thread) refers to dmul.o(.text) for __aeabi_dmul
-    buzzer.o(i.cruelAngelThesis3Thread) refers to dfixi.o(.text) for __aeabi_d2iz
-    buzzer.o(i.cruelAngelThesis3Thread) refers to rtx_delay.o(.text.osDelay) for osDelay
-    buzzer.o(i.cruelAngelThesis3Thread) refers to rtx_semaphore.o(.text.osSemaphoreRelease) for osSemaphoreRelease
-    buzzer.o(i.cruelAngelThesis3Thread) refers to buzzer.o(.data) for musicSem3
-    buzzer.o(i.cruelAngelThesis3Thread) refers to buzzer.o(.constdata) for .constdata
-    buzzer.o(i.cruelAngelThesis4Thread) refers to rt_memcpy.o(.emb_text) for __aeabi_memcpy4
-    buzzer.o(i.cruelAngelThesis4Thread) refers to rtx_semaphore.o(.text.osSemaphoreAcquire) for osSemaphoreAcquire
-    buzzer.o(i.cruelAngelThesis4Thread) refers to freqtomod.o(i.freqToMod) for freqToMod
-    buzzer.o(i.cruelAngelThesis4Thread) refers to dflti.o(.text) for __aeabi_ui2d
-    buzzer.o(i.cruelAngelThesis4Thread) refers to dmul.o(.text) for __aeabi_dmul
-    buzzer.o(i.cruelAngelThesis4Thread) refers to dfixi.o(.text) for __aeabi_d2iz
-    buzzer.o(i.cruelAngelThesis4Thread) refers to rtx_delay.o(.text.osDelay) for osDelay
-    buzzer.o(i.cruelAngelThesis4Thread) refers to rtx_semaphore.o(.text.osSemaphoreRelease) for osSemaphoreRelease
-    buzzer.o(i.cruelAngelThesis4Thread) refers to buzzer.o(.constdata) for .constdata
-    buzzer.o(i.cruelAngelThesis4Thread) refers to buzzer.o(.data) for musicSem4
-    buzzer.o(i.cruelAngelThesis5Thread) refers to rt_memcpy.o(.emb_text) for __aeabi_memcpy4
-    buzzer.o(i.cruelAngelThesis5Thread) refers to rtx_semaphore.o(.text.osSemaphoreAcquire) for osSemaphoreAcquire
-    buzzer.o(i.cruelAngelThesis5Thread) refers to freqtomod.o(i.freqToMod) for freqToMod
-    buzzer.o(i.cruelAngelThesis5Thread) refers to dflti.o(.text) for __aeabi_ui2d
-    buzzer.o(i.cruelAngelThesis5Thread) refers to dmul.o(.text) for __aeabi_dmul
-    buzzer.o(i.cruelAngelThesis5Thread) refers to dfixi.o(.text) for __aeabi_d2iz
-    buzzer.o(i.cruelAngelThesis5Thread) refers to rtx_delay.o(.text.osDelay) for osDelay
-    buzzer.o(i.cruelAngelThesis5Thread) refers to buzzer.o(.constdata) for .constdata
-    buzzer.o(i.cruelAngelThesis5Thread) refers to buzzer.o(.data) for musicSem5
     buzzer.o(i.initBuzzer) refers to rtx_semaphore.o(.text.osSemaphoreNew) for osSemaphoreNew
     buzzer.o(i.initBuzzer) refers to rtx_evflags.o(.text.osEventFlagsNew) for osEventFlagsNew
     buzzer.o(i.initBuzzer) refers to rtx_evflags.o(.text.osEventFlagsSet) for osEventFlagsSet
     buzzer.o(i.initBuzzer) refers to buzzer.o(.data) for musicSem
+    buzzer.o(i.tAudio1) refers to rt_memcpy.o(.emb_text) for __aeabi_memcpy4
+    buzzer.o(i.tAudio1) refers to rtx_semaphore.o(.text.osSemaphoreAcquire) for osSemaphoreAcquire
+    buzzer.o(i.tAudio1) refers to freqtomod.o(i.freqToMod) for freqToMod
+    buzzer.o(i.tAudio1) refers to dflti.o(.text) for __aeabi_ui2d
+    buzzer.o(i.tAudio1) refers to dmul.o(.text) for __aeabi_dmul
+    buzzer.o(i.tAudio1) refers to dfixi.o(.text) for __aeabi_d2iz
+    buzzer.o(i.tAudio1) refers to rtx_delay.o(.text.osDelay) for osDelay
+    buzzer.o(i.tAudio1) refers to rtx_semaphore.o(.text.osSemaphoreRelease) for osSemaphoreRelease
+    buzzer.o(i.tAudio1) refers to buzzer.o(.constdata) for .constdata
+    buzzer.o(i.tAudio1) refers to buzzer.o(.data) for musicSem
+    buzzer.o(i.tAudio2) refers to rtx_evflags.o(.text.osEventFlagsWait) for osEventFlagsWait
+    buzzer.o(i.tAudio2) refers to rtx_semaphore.o(.text.osSemaphoreAcquire) for osSemaphoreAcquire
+    buzzer.o(i.tAudio2) refers to rt_memcpy.o(.emb_text) for __aeabi_memcpy4
+    buzzer.o(i.tAudio2) refers to freqtomod.o(i.freqToMod) for freqToMod
+    buzzer.o(i.tAudio2) refers to dflti.o(.text) for __aeabi_ui2d
+    buzzer.o(i.tAudio2) refers to dmul.o(.text) for __aeabi_dmul
+    buzzer.o(i.tAudio2) refers to dfixi.o(.text) for __aeabi_d2iz
+    buzzer.o(i.tAudio2) refers to rtx_delay.o(.text.osDelay) for osDelay
+    buzzer.o(i.tAudio2) refers to rtx_semaphore.o(.text.osSemaphoreRelease) for osSemaphoreRelease
+    buzzer.o(i.tAudio2) refers to buzzer.o(.data) for idleMusicFlag
+    buzzer.o(i.tAudio2) refers to buzzer.o(.constdata) for .constdata
+    buzzer.o(i.tAudio3) refers to rtx_semaphore.o(.text.osSemaphoreAcquire) for osSemaphoreAcquire
+    buzzer.o(i.tAudio3) refers to rt_memcpy.o(.emb_text) for __aeabi_memcpy4
+    buzzer.o(i.tAudio3) refers to rtx_evflags.o(.text.osEventFlagsWait) for osEventFlagsWait
+    buzzer.o(i.tAudio3) refers to freqtomod.o(i.freqToMod) for freqToMod
+    buzzer.o(i.tAudio3) refers to dflti.o(.text) for __aeabi_ui2d
+    buzzer.o(i.tAudio3) refers to dmul.o(.text) for __aeabi_dmul
+    buzzer.o(i.tAudio3) refers to dfixi.o(.text) for __aeabi_d2iz
+    buzzer.o(i.tAudio3) refers to rtx_delay.o(.text.osDelay) for osDelay
+    buzzer.o(i.tAudio3) refers to rtx_semaphore.o(.text.osSemaphoreRelease) for osSemaphoreRelease
+    buzzer.o(i.tAudio3) refers to buzzer.o(.data) for musicSem3
+    buzzer.o(i.tAudio3) refers to buzzer.o(.constdata) for .constdata
+    buzzer.o(i.tAudio4) refers to rt_memcpy.o(.emb_text) for __aeabi_memcpy4
+    buzzer.o(i.tAudio4) refers to rtx_semaphore.o(.text.osSemaphoreAcquire) for osSemaphoreAcquire
+    buzzer.o(i.tAudio4) refers to freqtomod.o(i.freqToMod) for freqToMod
+    buzzer.o(i.tAudio4) refers to dflti.o(.text) for __aeabi_ui2d
+    buzzer.o(i.tAudio4) refers to dmul.o(.text) for __aeabi_dmul
+    buzzer.o(i.tAudio4) refers to dfixi.o(.text) for __aeabi_d2iz
+    buzzer.o(i.tAudio4) refers to rtx_delay.o(.text.osDelay) for osDelay
+    buzzer.o(i.tAudio4) refers to rtx_semaphore.o(.text.osSemaphoreRelease) for osSemaphoreRelease
+    buzzer.o(i.tAudio4) refers to buzzer.o(.constdata) for .constdata
+    buzzer.o(i.tAudio4) refers to buzzer.o(.data) for musicSem4
+    buzzer.o(i.tAudio5) refers to rt_memcpy.o(.emb_text) for __aeabi_memcpy4
+    buzzer.o(i.tAudio5) refers to rtx_semaphore.o(.text.osSemaphoreAcquire) for osSemaphoreAcquire
+    buzzer.o(i.tAudio5) refers to freqtomod.o(i.freqToMod) for freqToMod
+    buzzer.o(i.tAudio5) refers to dflti.o(.text) for __aeabi_ui2d
+    buzzer.o(i.tAudio5) refers to dmul.o(.text) for __aeabi_dmul
+    buzzer.o(i.tAudio5) refers to dfixi.o(.text) for __aeabi_d2iz
+    buzzer.o(i.tAudio5) refers to rtx_delay.o(.text.osDelay) for osDelay
+    buzzer.o(i.tAudio5) refers to buzzer.o(.constdata) for .constdata
+    buzzer.o(i.tAudio5) refers to buzzer.o(.data) for musicSem5
     ledcontrol.o(i.initLED) refers to rtx_evflags.o(.text.osEventFlagsNew) for osEventFlagsNew
     ledcontrol.o(i.initLED) refers to rtx_semaphore.o(.text.osSemaphoreNew) for osSemaphoreNew
     ledcontrol.o(i.initLED) refers to ledcontrol.o(.data) for greenEventFlag
-    ledcontrol.o(i.led_green_connect_thread) refers to rtx_semaphore.o(.text.osSemaphoreAcquire) for osSemaphoreAcquire
-    ledcontrol.o(i.led_green_connect_thread) refers to rtx_delay.o(.text.osDelay) for osDelay
-    ledcontrol.o(i.led_green_connect_thread) refers to ledcontrol.o(.data) for myConnectSem
-    ledcontrol.o(i.led_green_running_thread) refers to rtx_evflags.o(.text.osEventFlagsWait) for osEventFlagsWait
-    ledcontrol.o(i.led_green_running_thread) refers to rtx_delay.o(.text.osDelay) for osDelay
-    ledcontrol.o(i.led_green_running_thread) refers to ledcontrol.o(.constdata) for .constdata
-    ledcontrol.o(i.led_green_running_thread) refers to ledcontrol.o(.data) for greenEventFlag
-    ledcontrol.o(i.led_green_stop_thread) refers to rtx_evflags.o(.text.osEventFlagsWait) for osEventFlagsWait
-    ledcontrol.o(i.led_green_stop_thread) refers to ledcontrol.o(.data) for greenEventFlag
-    ledcontrol.o(i.led_red_thread) refers to rtx_delay.o(.text.osDelay) for osDelay
-    ledcontrol.o(i.led_red_thread) refers to ledcontrol.o(.data) for redDelay
+    ledcontrol.o(i.tLedGreenConnect) refers to rtx_semaphore.o(.text.osSemaphoreAcquire) for osSemaphoreAcquire
+    ledcontrol.o(i.tLedGreenConnect) refers to rtx_delay.o(.text.osDelay) for osDelay
+    ledcontrol.o(i.tLedGreenConnect) refers to ledcontrol.o(.data) for myConnectSem
+    ledcontrol.o(i.tLedGreenRunning) refers to rtx_evflags.o(.text.osEventFlagsWait) for osEventFlagsWait
+    ledcontrol.o(i.tLedGreenRunning) refers to rtx_delay.o(.text.osDelay) for osDelay
+    ledcontrol.o(i.tLedGreenRunning) refers to ledcontrol.o(.constdata) for .constdata
+    ledcontrol.o(i.tLedGreenRunning) refers to ledcontrol.o(.data) for greenEventFlag
+    ledcontrol.o(i.tLedGreenStop) refers to rtx_evflags.o(.text.osEventFlagsWait) for osEventFlagsWait
+    ledcontrol.o(i.tLedGreenStop) refers to ledcontrol.o(.data) for greenEventFlag
+    ledcontrol.o(i.tLedRed) refers to rtx_delay.o(.text.osDelay) for osDelay
+    ledcontrol.o(i.tLedRed) refers to ledcontrol.o(.data) for redDelay
     rtx_lib.o(i.__user_perthread_libspace) refers to rtx_lib.o(i.os_kernel_is_active) for os_kernel_is_active
     rtx_lib.o(i.__user_perthread_libspace) refers to rtx_thread.o(.text.osThreadGetId) for osThreadGetId
     rtx_lib.o(i.__user_perthread_libspace) refers to rtx_config.o(i.osRtxErrorNotify) for osRtxErrorNotify
@@ -1682,36 +1682,36 @@ Image Symbol Table
     i._mutex_release                         0x00002900   Section        0  rtx_lib.o(i._mutex_release)
     __tagsym$$used                           0x00002901   Number         0  rtx_lib.o(i._mutex_release)
     i._platform_post_stackheap_init          0x00002914   Section        0  rtx_lib.o(i._platform_post_stackheap_init)
-    i.cruelAngelThesis1Thread                0x0000291c   Section        0  buzzer.o(i.cruelAngelThesis1Thread)
-    i.cruelAngelThesis2Thread                0x000029bc   Section        0  buzzer.o(i.cruelAngelThesis2Thread)
-    i.cruelAngelThesis3Thread                0x00002a7c   Section        0  buzzer.o(i.cruelAngelThesis3Thread)
-    i.cruelAngelThesis4Thread                0x00002b88   Section        0  buzzer.o(i.cruelAngelThesis4Thread)
-    i.cruelAngelThesis5Thread                0x00002c24   Section        0  buzzer.o(i.cruelAngelThesis5Thread)
-    i.decoder_thread                         0x00002cb8   Section        0  main.o(i.decoder_thread)
-    i.freqToMod                              0x00002d60   Section        0  freqtomod.o(i.freqToMod)
-    i.initBuzzer                             0x00002d8c   Section        0  buzzer.o(i.initBuzzer)
-    i.initLED                                0x00002ea0   Section        0  ledcontrol.o(i.initLED)
-    i.initPWM                                0x00002fb0   Section        0  pwm.o(i.initPWM)
-    i.initUART2                              0x00003108   Section        0  uart.o(i.initUART2)
-    i.led_green_connect_thread               0x000031e4   Section        0  ledcontrol.o(i.led_green_connect_thread)
-    i.led_green_running_thread               0x00003258   Section        0  ledcontrol.o(i.led_green_running_thread)
-    i.led_green_stop_thread                  0x000032d0   Section        0  ledcontrol.o(i.led_green_stop_thread)
-    i.led_red_thread                         0x00003304   Section        0  ledcontrol.o(i.led_red_thread)
-    i.main                                   0x0000332c   Section        0  main.o(i.main)
-    i.motor                                  0x000033dc   Section        0  pwm.o(i.motor)
-    i.osRtxErrorNotify                       0x00003478   Section        0  rtx_config.o(i.osRtxErrorNotify)
-    i.osRtxIdleThread                        0x00003498   Section        0  rtx_config.o(i.osRtxIdleThread)
-    i.os_kernel_is_active                    0x0000349c   Section        0  rtx_lib.o(i.os_kernel_is_active)
-    os_kernel_is_active                      0x0000349d   Thumb Code    30  rtx_lib.o(i.os_kernel_is_active)
-    i.pwm_backward                           0x000034c0   Section        0  pwm.o(i.pwm_backward)
-    i.pwm_backward_left                      0x000034e4   Section        0  pwm.o(i.pwm_backward_left)
-    i.pwm_backward_right                     0x0000350c   Section        0  pwm.o(i.pwm_backward_right)
-    i.pwm_forward                            0x00003534   Section        0  pwm.o(i.pwm_forward)
-    i.pwm_forward_left                       0x00003558   Section        0  pwm.o(i.pwm_forward_left)
-    i.pwm_forward_right                      0x00003580   Section        0  pwm.o(i.pwm_forward_right)
-    i.pwm_left                               0x000035a8   Section        0  pwm.o(i.pwm_left)
-    i.pwm_right                              0x000035d8   Section        0  pwm.o(i.pwm_right)
-    i.pwm_stop                               0x00003608   Section        0  pwm.o(i.pwm_stop)
+    i.freqToMod                              0x0000291c   Section        0  freqtomod.o(i.freqToMod)
+    i.initBuzzer                             0x00002948   Section        0  buzzer.o(i.initBuzzer)
+    i.initLED                                0x00002a5c   Section        0  ledcontrol.o(i.initLED)
+    i.initPWM                                0x00002b6c   Section        0  pwm.o(i.initPWM)
+    i.initUART2                              0x00002cc4   Section        0  uart.o(i.initUART2)
+    i.main                                   0x00002da0   Section        0  main.o(i.main)
+    i.osRtxErrorNotify                       0x00002e50   Section        0  rtx_config.o(i.osRtxErrorNotify)
+    i.osRtxIdleThread                        0x00002e70   Section        0  rtx_config.o(i.osRtxIdleThread)
+    i.os_kernel_is_active                    0x00002e74   Section        0  rtx_lib.o(i.os_kernel_is_active)
+    os_kernel_is_active                      0x00002e75   Thumb Code    30  rtx_lib.o(i.os_kernel_is_active)
+    i.pwm_backward                           0x00002e98   Section        0  pwm.o(i.pwm_backward)
+    i.pwm_backward_left                      0x00002ebc   Section        0  pwm.o(i.pwm_backward_left)
+    i.pwm_backward_right                     0x00002ee4   Section        0  pwm.o(i.pwm_backward_right)
+    i.pwm_forward                            0x00002f0c   Section        0  pwm.o(i.pwm_forward)
+    i.pwm_forward_left                       0x00002f30   Section        0  pwm.o(i.pwm_forward_left)
+    i.pwm_forward_right                      0x00002f58   Section        0  pwm.o(i.pwm_forward_right)
+    i.pwm_left                               0x00002f80   Section        0  pwm.o(i.pwm_left)
+    i.pwm_right                              0x00002fb0   Section        0  pwm.o(i.pwm_right)
+    i.pwm_stop                               0x00002fe0   Section        0  pwm.o(i.pwm_stop)
+    i.tAudio1                                0x00003004   Section        0  buzzer.o(i.tAudio1)
+    i.tAudio2                                0x000030a4   Section        0  buzzer.o(i.tAudio2)
+    i.tAudio3                                0x00003164   Section        0  buzzer.o(i.tAudio3)
+    i.tAudio4                                0x00003270   Section        0  buzzer.o(i.tAudio4)
+    i.tAudio5                                0x0000330c   Section        0  buzzer.o(i.tAudio5)
+    i.tBrain                                 0x000033a0   Section        0  main.o(i.tBrain)
+    i.tLedGreenConnect                       0x00003448   Section        0  ledcontrol.o(i.tLedGreenConnect)
+    i.tLedGreenRunning                       0x000034bc   Section        0  ledcontrol.o(i.tLedGreenRunning)
+    i.tLedGreenStop                          0x00003534   Section        0  ledcontrol.o(i.tLedGreenStop)
+    i.tLedRed                                0x00003568   Section        0  ledcontrol.o(i.tLedRed)
+    i.tMotorControl                          0x00003590   Section        0  pwm.o(i.tMotorControl)
     x$fpl$fmul                               0x0000362c   Section      176  fmul.o(x$fpl$fmul)
     .constdata                               0x000036dc   Section      712  buzzer.o(.constdata)
     x$fpl$usenofp                            0x000036dc   Section        0  usenofp.o(x$fpl$usenofp)
@@ -1994,34 +1994,34 @@ Image Symbol Table
     _mutex_initialize                        0x000028dd   Thumb Code    36  rtx_lib.o(i._mutex_initialize)
     _mutex_release                           0x00002901   Thumb Code    20  rtx_lib.o(i._mutex_release)
     _platform_post_stackheap_init            0x00002915   Thumb Code     8  rtx_lib.o(i._platform_post_stackheap_init)
-    cruelAngelThesis1Thread                  0x0000291d   Thumb Code   136  buzzer.o(i.cruelAngelThesis1Thread)
-    cruelAngelThesis2Thread                  0x000029bd   Thumb Code   162  buzzer.o(i.cruelAngelThesis2Thread)
-    cruelAngelThesis3Thread                  0x00002a7d   Thumb Code   220  buzzer.o(i.cruelAngelThesis3Thread)
-    cruelAngelThesis4Thread                  0x00002b89   Thumb Code   130  buzzer.o(i.cruelAngelThesis4Thread)
-    cruelAngelThesis5Thread                  0x00002c25   Thumb Code   128  buzzer.o(i.cruelAngelThesis5Thread)
-    decoder_thread                           0x00002cb9   Thumb Code   140  main.o(i.decoder_thread)
-    freqToMod                                0x00002d61   Thumb Code    40  freqtomod.o(i.freqToMod)
-    initBuzzer                               0x00002d8d   Thumb Code   238  buzzer.o(i.initBuzzer)
-    initLED                                  0x00002ea1   Thumb Code   246  ledcontrol.o(i.initLED)
-    initPWM                                  0x00002fb1   Thumb Code   318  pwm.o(i.initPWM)
-    initUART2                                0x00003109   Thumb Code   198  uart.o(i.initUART2)
-    led_green_connect_thread                 0x000031e5   Thumb Code   104  ledcontrol.o(i.led_green_connect_thread)
-    led_green_running_thread                 0x00003259   Thumb Code   104  ledcontrol.o(i.led_green_running_thread)
-    led_green_stop_thread                    0x000032d1   Thumb Code    42  ledcontrol.o(i.led_green_stop_thread)
-    led_red_thread                           0x00003305   Thumb Code    32  ledcontrol.o(i.led_red_thread)
-    main                                     0x0000332d   Thumb Code   136  main.o(i.main)
-    motor                                    0x000033dd   Thumb Code   148  pwm.o(i.motor)
-    osRtxErrorNotify                         0x00003479   Thumb Code    32  rtx_config.o(i.osRtxErrorNotify)
-    osRtxIdleThread                          0x00003499   Thumb Code     4  rtx_config.o(i.osRtxIdleThread)
-    pwm_backward                             0x000034c1   Thumb Code    24  pwm.o(i.pwm_backward)
-    pwm_backward_left                        0x000034e5   Thumb Code    26  pwm.o(i.pwm_backward_left)
-    pwm_backward_right                       0x0000350d   Thumb Code    26  pwm.o(i.pwm_backward_right)
-    pwm_forward                              0x00003535   Thumb Code    24  pwm.o(i.pwm_forward)
-    pwm_forward_left                         0x00003559   Thumb Code    26  pwm.o(i.pwm_forward_left)
-    pwm_forward_right                        0x00003581   Thumb Code    26  pwm.o(i.pwm_forward_right)
-    pwm_left                                 0x000035a9   Thumb Code    36  pwm.o(i.pwm_left)
-    pwm_right                                0x000035d9   Thumb Code    36  pwm.o(i.pwm_right)
-    pwm_stop                                 0x00003609   Thumb Code    24  pwm.o(i.pwm_stop)
+    freqToMod                                0x0000291d   Thumb Code    40  freqtomod.o(i.freqToMod)
+    initBuzzer                               0x00002949   Thumb Code   238  buzzer.o(i.initBuzzer)
+    initLED                                  0x00002a5d   Thumb Code   246  ledcontrol.o(i.initLED)
+    initPWM                                  0x00002b6d   Thumb Code   318  pwm.o(i.initPWM)
+    initUART2                                0x00002cc5   Thumb Code   198  uart.o(i.initUART2)
+    main                                     0x00002da1   Thumb Code   136  main.o(i.main)
+    osRtxErrorNotify                         0x00002e51   Thumb Code    32  rtx_config.o(i.osRtxErrorNotify)
+    osRtxIdleThread                          0x00002e71   Thumb Code     4  rtx_config.o(i.osRtxIdleThread)
+    pwm_backward                             0x00002e99   Thumb Code    24  pwm.o(i.pwm_backward)
+    pwm_backward_left                        0x00002ebd   Thumb Code    26  pwm.o(i.pwm_backward_left)
+    pwm_backward_right                       0x00002ee5   Thumb Code    26  pwm.o(i.pwm_backward_right)
+    pwm_forward                              0x00002f0d   Thumb Code    24  pwm.o(i.pwm_forward)
+    pwm_forward_left                         0x00002f31   Thumb Code    26  pwm.o(i.pwm_forward_left)
+    pwm_forward_right                        0x00002f59   Thumb Code    26  pwm.o(i.pwm_forward_right)
+    pwm_left                                 0x00002f81   Thumb Code    36  pwm.o(i.pwm_left)
+    pwm_right                                0x00002fb1   Thumb Code    36  pwm.o(i.pwm_right)
+    pwm_stop                                 0x00002fe1   Thumb Code    24  pwm.o(i.pwm_stop)
+    tAudio1                                  0x00003005   Thumb Code   136  buzzer.o(i.tAudio1)
+    tAudio2                                  0x000030a5   Thumb Code   162  buzzer.o(i.tAudio2)
+    tAudio3                                  0x00003165   Thumb Code   220  buzzer.o(i.tAudio3)
+    tAudio4                                  0x00003271   Thumb Code   130  buzzer.o(i.tAudio4)
+    tAudio5                                  0x0000330d   Thumb Code   128  buzzer.o(i.tAudio5)
+    tBrain                                   0x000033a1   Thumb Code   140  main.o(i.tBrain)
+    tLedGreenConnect                         0x00003449   Thumb Code   104  ledcontrol.o(i.tLedGreenConnect)
+    tLedGreenRunning                         0x000034bd   Thumb Code   104  ledcontrol.o(i.tLedGreenRunning)
+    tLedGreenStop                            0x00003535   Thumb Code    42  ledcontrol.o(i.tLedGreenStop)
+    tLedRed                                  0x00003569   Thumb Code    32  ledcontrol.o(i.tLedRed)
+    tMotorControl                            0x00003591   Thumb Code   148  pwm.o(i.tMotorControl)
     __aeabi_fmul                             0x0000362d   Thumb Code     0  fmul.o(x$fpl$fmul)
     _fmul                                    0x0000362d   Thumb Code   172  fmul.o(x$fpl$fmul)
     __I$use$fp                               0x000036dc   Number         0  usenofp.o(x$fpl$usenofp)
@@ -2236,35 +2236,35 @@ Memory Map of the image
     0x000028dc   0x000028dc   0x00000024   Code   RO          322    i._mutex_initialize  rtx_lib.o
     0x00002900   0x00002900   0x00000014   Code   RO          323    i._mutex_release    rtx_lib.o
     0x00002914   0x00002914   0x00000008   Code   RO          324    i._platform_post_stackheap_init  rtx_lib.o
-    0x0000291c   0x0000291c   0x000000a0   Code   RO          217    i.cruelAngelThesis1Thread  buzzer.o
-    0x000029bc   0x000029bc   0x000000c0   Code   RO          218    i.cruelAngelThesis2Thread  buzzer.o
-    0x00002a7c   0x00002a7c   0x0000010c   Code   RO          219    i.cruelAngelThesis3Thread  buzzer.o
-    0x00002b88   0x00002b88   0x0000009c   Code   RO          220    i.cruelAngelThesis4Thread  buzzer.o
-    0x00002c24   0x00002c24   0x00000094   Code   RO          221    i.cruelAngelThesis5Thread  buzzer.o
-    0x00002cb8   0x00002cb8   0x000000a8   Code   RO            3    i.decoder_thread    main.o
-    0x00002d60   0x00002d60   0x0000002c   Code   RO          204    i.freqToMod         freqtomod.o
-    0x00002d8c   0x00002d8c   0x00000114   Code   RO          222    i.initBuzzer        buzzer.o
-    0x00002ea0   0x00002ea0   0x00000110   Code   RO          271    i.initLED           ledcontrol.o
-    0x00002fb0   0x00002fb0   0x00000158   Code   RO          123    i.initPWM           pwm.o
-    0x00003108   0x00003108   0x000000dc   Code   RO           84    i.initUART2         uart.o
-    0x000031e4   0x000031e4   0x00000074   Code   RO          272    i.led_green_connect_thread  ledcontrol.o
-    0x00003258   0x00003258   0x00000078   Code   RO          273    i.led_green_running_thread  ledcontrol.o
-    0x000032d0   0x000032d0   0x00000034   Code   RO          274    i.led_green_stop_thread  ledcontrol.o
-    0x00003304   0x00003304   0x00000028   Code   RO          275    i.led_red_thread    ledcontrol.o
-    0x0000332c   0x0000332c   0x000000b0   Code   RO            4    i.main              main.o
-    0x000033dc   0x000033dc   0x0000009c   Code   RO          124    i.motor             pwm.o
-    0x00003478   0x00003478   0x00000020   Code   RO          396    i.osRtxErrorNotify  rtx_config.o
-    0x00003498   0x00003498   0x00000004   Code   RO          397    i.osRtxIdleThread   rtx_config.o
-    0x0000349c   0x0000349c   0x00000024   Code   RO          325    i.os_kernel_is_active  rtx_lib.o
-    0x000034c0   0x000034c0   0x00000024   Code   RO          125    i.pwm_backward      pwm.o
-    0x000034e4   0x000034e4   0x00000028   Code   RO          126    i.pwm_backward_left  pwm.o
-    0x0000350c   0x0000350c   0x00000028   Code   RO          127    i.pwm_backward_right  pwm.o
-    0x00003534   0x00003534   0x00000024   Code   RO          128    i.pwm_forward       pwm.o
-    0x00003558   0x00003558   0x00000028   Code   RO          129    i.pwm_forward_left  pwm.o
-    0x00003580   0x00003580   0x00000028   Code   RO          130    i.pwm_forward_right  pwm.o
-    0x000035a8   0x000035a8   0x00000030   Code   RO          131    i.pwm_left          pwm.o
-    0x000035d8   0x000035d8   0x00000030   Code   RO          132    i.pwm_right         pwm.o
-    0x00003608   0x00003608   0x00000024   Code   RO          133    i.pwm_stop          pwm.o
+    0x0000291c   0x0000291c   0x0000002c   Code   RO          204    i.freqToMod         freqtomod.o
+    0x00002948   0x00002948   0x00000114   Code   RO          217    i.initBuzzer        buzzer.o
+    0x00002a5c   0x00002a5c   0x00000110   Code   RO          271    i.initLED           ledcontrol.o
+    0x00002b6c   0x00002b6c   0x00000158   Code   RO          123    i.initPWM           pwm.o
+    0x00002cc4   0x00002cc4   0x000000dc   Code   RO           84    i.initUART2         uart.o
+    0x00002da0   0x00002da0   0x000000b0   Code   RO            3    i.main              main.o
+    0x00002e50   0x00002e50   0x00000020   Code   RO          396    i.osRtxErrorNotify  rtx_config.o
+    0x00002e70   0x00002e70   0x00000004   Code   RO          397    i.osRtxIdleThread   rtx_config.o
+    0x00002e74   0x00002e74   0x00000024   Code   RO          325    i.os_kernel_is_active  rtx_lib.o
+    0x00002e98   0x00002e98   0x00000024   Code   RO          124    i.pwm_backward      pwm.o
+    0x00002ebc   0x00002ebc   0x00000028   Code   RO          125    i.pwm_backward_left  pwm.o
+    0x00002ee4   0x00002ee4   0x00000028   Code   RO          126    i.pwm_backward_right  pwm.o
+    0x00002f0c   0x00002f0c   0x00000024   Code   RO          127    i.pwm_forward       pwm.o
+    0x00002f30   0x00002f30   0x00000028   Code   RO          128    i.pwm_forward_left  pwm.o
+    0x00002f58   0x00002f58   0x00000028   Code   RO          129    i.pwm_forward_right  pwm.o
+    0x00002f80   0x00002f80   0x00000030   Code   RO          130    i.pwm_left          pwm.o
+    0x00002fb0   0x00002fb0   0x00000030   Code   RO          131    i.pwm_right         pwm.o
+    0x00002fe0   0x00002fe0   0x00000024   Code   RO          132    i.pwm_stop          pwm.o
+    0x00003004   0x00003004   0x000000a0   Code   RO          218    i.tAudio1           buzzer.o
+    0x000030a4   0x000030a4   0x000000c0   Code   RO          219    i.tAudio2           buzzer.o
+    0x00003164   0x00003164   0x0000010c   Code   RO          220    i.tAudio3           buzzer.o
+    0x00003270   0x00003270   0x0000009c   Code   RO          221    i.tAudio4           buzzer.o
+    0x0000330c   0x0000330c   0x00000094   Code   RO          222    i.tAudio5           buzzer.o
+    0x000033a0   0x000033a0   0x000000a8   Code   RO            4    i.tBrain            main.o
+    0x00003448   0x00003448   0x00000074   Code   RO          272    i.tLedGreenConnect  ledcontrol.o
+    0x000034bc   0x000034bc   0x00000078   Code   RO          273    i.tLedGreenRunning  ledcontrol.o
+    0x00003534   0x00003534   0x00000034   Code   RO          274    i.tLedGreenStop     ledcontrol.o
+    0x00003568   0x00003568   0x00000028   Code   RO          275    i.tLedRed           ledcontrol.o
+    0x00003590   0x00003590   0x0000009c   Code   RO          133    i.tMotorControl     pwm.o
     0x0000362c   0x0000362c   0x000000b0   Code   RO         1041    x$fpl$fmul          fz_ps.l(fmul.o)
     0x000036dc   0x000036dc   0x00000000   Code   RO         1048    x$fpl$usenofp       fz_ps.l(usenofp.o)
     0x000036dc   0x000036dc   0x000002c8   Data   RO          223    .constdata          buzzer.o
@@ -2316,11 +2316,11 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      1200        186        712         28          0       4121   buzzer.o
+      1200        186        712         28          0       3961   buzzer.o
         44          4          0          0          0        500   freqtomod.o
-       600         72         24         16          0       2979   ledcontrol.o
-       344         68          0          0          0     220708   main.o
-       864        150          0          0          0       4429   pwm.o
+       600         72         24         16          0       2916   ledcontrol.o
+       344         68          0          0          0     220692   main.o
+       864        150          0          0          0       4445   pwm.o
         64          8          0          0          0       1033   rtx_config.o
        136          6        260       4945          0      12670   rtx_lib.o
         80         44        192          0        256        876   startup_mkl25z4.o
@@ -2328,7 +2328,7 @@ Image component sizes
        408         46          0          4          0      10262   uart.o
 
     ----------------------------------------------------------------------
-      4152        626       1220       5004        256     259081   Object Totals
+      4152        626       1220       5004        256     258858   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          0          0          0          7          0          0   (incl. Padding)
 
@@ -2403,8 +2403,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     13852       1058       1300       5168        360     391991   Grand Totals
-     13852       1058       1300         60        360     391991   ELF Image Totals (compressed)
+     13852       1058       1300       5168        360     391768   Grand Totals
+     13852       1058       1300         60        360     391768   ELF Image Totals (compressed)
      13852       1058       1300         60          0          0   ROM Totals
 
 ==============================================================================

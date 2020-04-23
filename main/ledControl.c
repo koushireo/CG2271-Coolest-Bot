@@ -20,8 +20,8 @@ osSemaphoreId_t myConnectSem;
 int greenDelay = 500; //500 when moving, 1 when staying
 int redDelay = 250; //500 when moving, 250 when staying
 
-void led_green_running_thread(void *argument);
-void led_green_stop_thread(void *argument);
+void tLedGreenRunning(void *argument);
+void tLedGreenStop(void *argument);
 
 void initLED(void) {
 	// Enable Clock to PORTC
@@ -58,7 +58,7 @@ void initLED(void) {
     myConnectSem = osSemaphoreNew(1,0,NULL);
 }
 
-void led_green_running_thread(void *argument) {
+void tLedGreenRunning(void *argument) {
     int vert = 0;
     int hor = 0;
     int hor_array[4] = {MASK(ROW_1),MASK(ROW_2), MASK(ROW_3), MASK(ROW_4)};
@@ -77,7 +77,7 @@ void led_green_running_thread(void *argument) {
     }
 }
 
-void led_green_stop_thread(void *argument) {
+void tLedGreenStop(void *argument) {
     int hor_array = {MASK(ROW_1) | MASK(ROW_2) | MASK(ROW_3) | MASK(ROW_4)};
     int vert_array = {MASK(COL_1) | MASK(COL_2)};  
     while (1) {
@@ -87,7 +87,7 @@ void led_green_stop_thread(void *argument) {
     }
 }
 
-void led_green_connect_thread(void *argument) {
+void tLedGreenConnect(void *argument) {
     int hor_array = {MASK(ROW_1) | MASK(ROW_2) | MASK(ROW_3) | MASK(ROW_4)};
     int vert_array = {MASK(COL_1) | MASK(COL_2)};
     osSemaphoreAcquire(myConnectSem, osWaitForever);
@@ -105,7 +105,7 @@ void led_green_connect_thread(void *argument) {
 //All 8 flashes at 250ms intervals when stationary 
 //All 8 flashes at 500ms intervals when moving
 
-void led_red_thread(void *argument) {
+void tLedRed(void *argument) {
     while(1) {
         PTC->PSOR = MASK(RED);
         osDelay(redDelay);
