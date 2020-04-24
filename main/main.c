@@ -19,10 +19,8 @@ void tBrain(void *argument) {
     for (;;) {
         osMessageQueueGet(UARTMsgQ, &UARTdata, NULL, osWaitForever);  //wait for message from UART IRQ
         redDelay = 250;                                               //set initial red blinking speed to 250
-        osEventFlagsSet(greenEventFlag, 0x10);                        //set all LED to non blink initially
         if ((UARTdata & 0b11) == 0b11) {                              //to get tMotorControl to move
             redDelay = 500;                                           //if tMotorControl moves, set red blinking speed to 500
-            osEventFlagsClear(greenEventFlag, 0x11);                     //enable green led blinking
             osEventFlagsSet(greenEventFlag, 0x1); 
             osMessageQueuePut(tMotorMsgQ, &UARTdata, NULL, 0);        //decode tMotorControl data
         } else if ((UARTdata & 0b11) == 0b00) {
