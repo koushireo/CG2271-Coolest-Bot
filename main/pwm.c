@@ -140,8 +140,8 @@ void tMotorControl(void* argument) {
         } else {
             pwm_stop();
             osEventFlagsClear(greenEventFlag, 0x11);
-                osEventFlagsSet(greenEventFlag, 0x10);
-                redDelay = 250;
+            osEventFlagsSet(greenEventFlag, 0x10);
+            redDelay = 250;
         }
     }
 }
