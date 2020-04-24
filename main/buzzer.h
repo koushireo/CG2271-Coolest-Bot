@@ -4,8 +4,8 @@
 #include "cmsis_os2.h"
 #include "string.h"
 
-extern osSemaphoreId_t musicSem, musicSem2, musicSem3, musicSem4;
-extern osEventFlagsId_t idleMusicFlag;
+extern osSemaphoreId_t musicSem1, musicSem2, musicSem3, musicSem4;
+extern osEventFlagsId_t runningMusicFlag;
 extern int MusicRepeat1;
 
 void initBuzzer(void);

@@ -26,10 +26,10 @@ void tBrain(void *argument) {
             osEventFlagsSet(greenEventFlag, 0x1);                     //enable green led blinking
             osMessageQueuePut(tMotorMsgQ, &UARTdata, NULL, 0);        //decode tMotorControl data
         } else if ((UARTdata & 0b11) == 0b00) {
-            osSemaphoreRelease(musicSem);                             //play music to indicate communication established
+            osSemaphoreRelease(musicSem1);                             //play music to indicate communication established
             osSemaphoreRelease(myConnectSem);
         } else if ((UARTdata & 0b11) == 0b01) {
-            osEventFlagsClear(idleMusicFlag, 0x1);                    //disable idle music
+            osEventFlagsClear(runningMusicFlag, 0x1);                    //disable idle music
             osSemaphoreRelease(musicSem4);                            //play ending music
         }
     }

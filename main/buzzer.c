@@ -38,8 +38,8 @@
 #define CRO 500 //CROTCHET
 #define QUA 250 //QUAVER
 
-osSemaphoreId_t musicSem, musicSem2, musicSem3, musicSem4, musicSem5;
-osEventFlagsId_t idleMusicFlag;      
+osSemaphoreId_t musicSem1, musicSem2, musicSem3, musicSem4, musicSem5;
+osEventFlagsId_t runningMusicFlag;      
 
 int MusicRepeat1 = 0;
 
@@ -61,14 +61,14 @@ void initBuzzer(void) {
     TPM1_C0SC &= ~((TPM_CnSC_ELSB_MASK) | (TPM_CnSC_ELSA_MASK) | (TPM_CnSC_MSB_MASK) | (TPM_CnSC_MSA_MASK));
     TPM1_C0SC |= (TPM_CnSC_ELSB(1) | TPM_CnSC_MSB(1));
     
-    musicSem = osSemaphoreNew(1,0,NULL);
+    musicSem1 = osSemaphoreNew(1,0,NULL);
     musicSem2 = osSemaphoreNew(1,0,NULL);
     musicSem3 = osSemaphoreNew(1,0,NULL);
     musicSem4 = osSemaphoreNew(1,0,NULL);
     musicSem5 = osSemaphoreNew(1,0,NULL);
     
-    idleMusicFlag = osEventFlagsNew(NULL);
-    osEventFlagsSet(idleMusicFlag, 0x1);
+    runningMusicFlag = osEventFlagsNew(NULL);
+    osEventFlagsSet(runningMusicFlag, 0x1);
 }
 
 void tAudio1() {
@@ -77,7 +77,7 @@ void tAudio1() {
     int total = sizeof(note)/sizeof(int);
     int counter = 0;
     for (;;) {
-        osSemaphoreAcquire(musicSem, osWaitForever);
+        osSemaphoreAcquire(musicSem1, osWaitForever);
         for (;counter < total; counter += 1) {
             if (note[counter] == 0) {
                 TPM1_C0V = 0;
@@ -95,14 +95,14 @@ void tAudio1() {
 //Bar 10
 void tAudio2(void* argument) {
     for (;;) {
-        osEventFlagsWait(idleMusicFlag, 0x1, osFlagsNoClear, osWaitForever);
+        osEventFlagsWait(runningMusicFlag, 0x1, osFlagsNoClear, osWaitForever);
         osSemaphoreAcquire(musicSem2, osWaitForever);
         int note[] =     {0,   DS7, AS6,  0,  DS7, F7,  AS6, AS6, G7,  GS7,  G7,  F7, DS7, F7,  G7,  GS7,  G7,  C7,  C7,  D7};
         int duration[] = {500, 500, 750, 125, 750, 375, 250, 1000, 375, 375, 250, 375, 375, 250, 375, 375, 250, 750, 125, 125};
         int counter = 0;
         int total = sizeof(note)/sizeof(int);
         for (;(counter < total); counter += 1) {\
-            osEventFlagsWait(idleMusicFlag, 0x1, osFlagsNoClear, osWaitForever);
+            osEventFlagsWait(runningMusicFlag, 0x1, osFlagsNoClear, osWaitForever);
             if (note[counter] == 0) {
                 TPM1_C0V = 0;
             } else {
@@ -142,7 +142,7 @@ void tAudio3(void* argument) {
         int counter = 0;
         int total = sizeof(note)/sizeof(int);
         for (;(counter < total); counter += 1) {
-            osEventFlagsWait(idleMusicFlag, 0x1, osFlagsNoClear, osWaitForever);
+            osEventFlagsWait(runningMusicFlag, 0x1, osFlagsNoClear, osWaitForever);
             if (note[counter] == 0) {
                 TPM1_C0V = 0;
             } else {
