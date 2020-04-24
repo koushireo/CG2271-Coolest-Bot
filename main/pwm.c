@@ -76,7 +76,7 @@ void pwm_backward(void) {
 }
 
 void pwm_left(void) {
-	TPM2_C0V = (int)(LEFT_POWER * REVERSE_POWER * MOD_VAL * 0.5);
+	TPM2_C0V = 255 - (int)(LEFT_POWER * REVERSE_POWER * MOD_VAL * 0.5);
 	TPM0_C1V = (int)(RIGHT_POWER * FORWARD_POWER * MOD_VAL * 0.5);
 	PTA->PCOR |= MASK(2);
 	PTA->PSOR |= MASK(5);
@@ -84,7 +84,7 @@ void pwm_left(void) {
 
 void pwm_right(void) {
 	TPM2_C0V = (int)(LEFT_POWER * FORWARD_POWER * MOD_VAL * 0.5);
-	TPM0_C1V = (int)(RIGHT_POWER * REVERSE_POWER * MOD_VAL * 0.5);
+	TPM0_C1V = 255 - (int)(RIGHT_POWER * REVERSE_POWER * MOD_VAL * 0.5);
 	PTA->PCOR |= MASK(5);
 	PTA->PSOR |= MASK(2);
 }

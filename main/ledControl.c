@@ -62,7 +62,7 @@ void tLedGreenRunning(void *argument) {
     int vert = 0;
     int hor = 0;
     int hor_array[4] = {MASK(ROW_1),MASK(ROW_2), MASK(ROW_3), MASK(ROW_4)};
-    int vert_array[2] = {MASK(COL_1), MASK(COL_2)};   
+    int vert_array[2] = {MASK(COL_1), MASK(COL_2)};
     while(1) {
         osEventFlagsWait(greenEventFlag, 0x1, osFlagsWaitAny, osWaitForever);
         PTC->PDOR = 0;

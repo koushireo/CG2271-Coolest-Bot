@@ -38,7 +38,7 @@
 #define CRO 500 //CROTCHET
 #define QUA 250 //QUAVER
 
-osSemaphoreId_t musicSem1, musicSem2, musicSem3, musicSem4, musicSem5;
+osSemaphoreId_t musicSem1, musicSem2, musicSem3, musicSem4;
 osEventFlagsId_t runningMusicFlag;      
 
 int MusicRepeat1 = 0;
@@ -65,7 +65,6 @@ void initBuzzer(void) {
     musicSem2 = osSemaphoreNew(1,0,NULL);
     musicSem3 = osSemaphoreNew(1,0,NULL);
     musicSem4 = osSemaphoreNew(1,0,NULL);
-    musicSem5 = osSemaphoreNew(1,0,NULL);
     
     runningMusicFlag = osEventFlagsNew(NULL);
     osEventFlagsSet(runningMusicFlag, 0x1);
@@ -166,27 +165,6 @@ void tAudio4() {
     int total = sizeof(note)/sizeof(int);
     for (;;) {
         osSemaphoreAcquire(musicSem4, osWaitForever);
-        for (;counter < total; counter += 1) {
-            if (note[counter] == 0) {
-                TPM1_C0V = 0;
-            } else {
-                TPM1->MOD = freqToMod(note[counter]);
-                TPM1_C0V = (int)(0.4 * TPM1->MOD);
-            }
-            osDelay(duration[counter]);
-        }
-        osSemaphoreRelease(musicSem5);
-    }
-}
-
-//Bar 30
-void tAudio5() {
-    int note[] =     {DS7, D7,  DS7, D7,  F7,  DS7, D7,  DS7,  F7, G7,  GS7, G7,  F7,  DS7, F7, G7};
-    int duration[] = {750, 250, 750, 250, 750, 250, 375, 375, 250, 375, 375, 250, 375,  375, 250, 1875};
-    int counter = 0;
-    int total = sizeof(note)/sizeof(int);
-    for (;;) {
-        osSemaphoreAcquire(musicSem5, osWaitForever);
         for (;counter < total; counter += 1) {
             if (note[counter] == 0) {
                 TPM1_C0V = 0;
