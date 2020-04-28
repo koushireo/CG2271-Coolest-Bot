@@ -1,7 +1,3 @@
-/*----------------------------------------------------------------------------
- * CMSIS-RTOS 'main' function template
- *---------------------------------------------------------------------------*/
- 
 #include "RTE_Components.h"
 #include CMSIS_device_header
 #include "cmsis_os2.h"
@@ -17,81 +13,44 @@
 #define MASK(x) (1 << (x))
 
 //Define thread to handle UART2 interrupts
-void UART2_thread(void *argument) {
+
+void tBrain(void *argument) {
+    int UARTdata;
     for (;;) {
-        osSemaphoreAcquire(UARTsem, osWaitForever);	
-        if (UARTdata & 2) {
-            if (UARTdata & 1) {
-                osSemaphoreRelease(PWMsem);
-            } else {
-                osSemaphoreRelease(mySem2);
-            }
-        } else {
-            if (UARTdata & 1) {
-                osSemaphoreRelease(mySem4);
-            } else {
-                osSemaphoreRelease(mySem);
-            }
+        osMessageQueueGet(UARTMsgQ, &UARTdata, NULL, osWaitForever);  //wait for message from UART IRQ
+        redDelay = 250;                                               //set initial red blinking speed to 250
+        if ((UARTdata & 0b11) == 0b11) {                              //to get tMotorControl to move
+            redDelay = 500;                                           //if tMotorControl moves, set red blinking speed to 500
+            osEventFlagsSet(greenEventFlag, 0x1); 
+            osMessageQueuePut(tMotorMsgQ, &UARTdata, NULL, 0);        //decode tMotorControl data
+        } else if ((UARTdata & 0b11) == 0b00) {
+            osSemaphoreRelease(musicSem1);                             //play music to indicate communication established
+            osSemaphoreRelease(myConnectSem);
+        } else if ((UARTdata & 0b11) == 0b01) {
+            osEventFlagsClear(runningMusicFlag, 0x1);                    //disable idle music
+            osSemaphoreRelease(musicSem4);                            //play ending music
         }
     }
 }
-
-void pwm_thread(void *argument) {
-    for (;;) {
-        osSemaphoreAcquire(PWMsem, osWaitForever);
-        if (UARTdata & MASK(2)) {
-            if (UARTdata & MASK(4)) {
-                pwm_forward_left();
-            } else if (UARTdata & MASK(5)) {
-                pwm_forward_right();
-            } else {				
-                pwm_forward();
-            }
-        } else if (UARTdata & MASK(3)) {
-            if (UARTdata & MASK(4)) {
-                pwm_backward_left();
-            } else if (UARTdata & MASK(5)) {
-                pwm_backward_right();
-            } else {				
-                pwm_backward();
-            }
-        } else if (UARTdata & MASK(4)) {
-            pwm_left();
-        } else if (UARTdata & MASK(5)) {
-            pwm_right();
-        } else {
-            pwm_stop();
-            redDelay = 500;
-            running = 0;
-            osSemaphoreRelease(greenStopSemaphore);
-            continue;
-        }
-        redDelay = 250;
-        running = 1;
-    }
-}
-
 
 int main (void) { 
     // System Initialization
     SystemCoreClockUpdate();
+    osKernelInitialize();                 // Initialize CMSIS-RTOS
     initPWM();
     initUART2(BAUD_RATE);
     initBuzzer();
     initLED();
-    osKernelInitialize();                 // Initialize CMSIS-RTOS
-    osThreadNew(UART2_thread, NULL, NULL);
-    osThreadNew(cruelAngelThesis4Thread, NULL, NULL);
-    osThreadSetPriority(cruelAngelThesis4Thread, osPriorityLow7);
-    osThreadNew(cruelAngelThesis5Thread, NULL, NULL);
-    osThreadSetPriority(cruelAngelThesis5Thread, osPriorityLow7);
-    osThreadNew(cruelAngelThesis1Thread, NULL, NULL);  
-    osThreadNew(cruelAngelThesis2Thread, NULL, NULL);
-    osThreadNew(cruelAngelThesis3Thread, NULL, NULL);
-    osThreadNew(led_red_thread, NULL, NULL);
-    osThreadNew(led_green_running_thread, NULL, NULL);
-    osThreadNew(led_green_stop_thread, NULL, NULL);
-    osThreadNew(pwm_thread, NULL, NULL);
+    osThreadNew(tBrain, NULL, NULL);
+    osThreadNew(tMotorControl, NULL, NULL);
+    osThreadNew(tAudio1, NULL, NULL);
+    osThreadNew(tAudio2, NULL, NULL);
+    osThreadNew(tAudio3, NULL, NULL);
+    osThreadNew(tAudio4, NULL, NULL);
+    osThreadNew(tLedRed, NULL, NULL);
+    osThreadNew(tLedGreenRunning, NULL, NULL);
+    osThreadNew(tLedGreenConnect, NULL, NULL);
+    osThreadNew(tLedGreenStop, NULL, NULL);
     osKernelStart();                      // Start thread execution
     for (;;) {
     }

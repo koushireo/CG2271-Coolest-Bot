@@ -6,8 +6,7 @@
 #define UART_RX_PORTE23 23
 #define UART2_INT_PRIO 128
 
-osSemaphoreId_t UARTsem;
-int UARTdata = 0;
+osMessageQueueId_t UARTMsgQ;
 
 void initUART2(uint32_t baud_rate) {
     uint32_t divisor, bus_clock;
@@ -39,16 +38,16 @@ void initUART2(uint32_t baud_rate) {
     NVIC_ClearPendingIRQ(UART2_IRQn);
     NVIC_EnableIRQ(UART2_IRQn);	
 		
-    //initialize semaphore for UART
-    UARTsem = osSemaphoreNew(1,0,NULL);
+    UARTMsgQ = osMessageQueueNew(1, 1, NULL);
 }
 
 //Define UART2 interrupt handler
 void UART2_IRQHandler() {
     NVIC_ClearPendingIRQ(UART2_IRQn);
     //clear flag
+    int UARTdata;
     UARTdata = UART2->S1;
     UARTdata = UART2->D;
-    osSemaphoreRelease(UARTsem);
+    osMessageQueuePut(UARTMsgQ, &UARTdata, NULL, 0);
     //do something
 }
